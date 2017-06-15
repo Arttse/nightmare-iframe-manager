@@ -14,8 +14,10 @@ module.exports = exports = function(Nightmare) {
       var document = window.top.document;
       if ($array.length > 0) {
         $array.forEach(function(selector) {
-          document = document.querySelector(selector)
-            .contentDocument;
+          var query = document.querySelector(selector)
+          if (!!query) {
+            document = query.contentDocument;
+          }
         });
       }
       return (js_fn)
