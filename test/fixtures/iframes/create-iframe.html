@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create iframe</title>
+  </head>
+  <body>
+    <button id="create-iframe" onclick="createIframe();">Create iframe</button>
+    <script>
+      function createIframe() {
+        var iframe = document.createElement('iframe')
+        iframe.id = 'created-iframe'
+        iframe.src = 'created-iframe.html'
+        document.body.appendChild(iframe)
+      }
+    </script>
+  </body>
+</html>

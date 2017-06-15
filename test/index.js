@@ -102,6 +102,66 @@ describe('Nightmare', function() {
       title.should.equal('root')
     });
 
+    it('should be able to create iframe by js, enter to created iframe, reload parent page, check exists', function*() {
+      var title = yield nightmare
+        .goto(fixture('iframes/create-iframe.html'))
+        .title()
+
+      title.should.equal('Create iframe')
+
+      var exists = yield nightmare.exists('#created-iframe')
+
+      exists.should.be.a('boolean')
+      exists.should.be.false
+
+      var exists = yield nightmare.exists('#create-iframe')
+
+      exists.should.be.a('boolean')
+      exists.should.be.true
+
+      yield nightmare
+        .click('#create-iframe')
+        .wait(100)
+
+      var exists = yield nightmare.exists('#created-iframe')
+
+      exists.should.be.a('boolean')
+      exists.should.be.true
+
+      var title = yield nightmare
+        .enterIFrame('#created-iframe')
+        .title()
+
+      title.should.equal('Created iframe')
+
+      var exists = yield nightmare.exists('#create-iframe')
+
+      exists.should.be.a('boolean')
+      exists.should.be.false
+
+      var exists = yield nightmare.exists('#reload-parent')
+
+      exists.should.be.a('boolean')
+      exists.should.be.true
+
+      yield nightmare.click ('#reload-parent')
+      
+      var exists = yield nightmare.exists('#reload-parent')
+
+      exists.should.be.a('boolean')
+      exists.should.be.false
+
+      var exists = yield nightmare.exists('#create-iframe')
+
+      exists.should.be.a('boolean')
+      exists.should.be.true
+
+      var exists = yield nightmare.exists('#created-iframe')
+
+      exists.should.be.a('boolean')
+      exists.should.be.false
+    });
+
   });
 });
 
